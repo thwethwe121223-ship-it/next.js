@@ -1,86 +1,123 @@
 "use client";
+
 import React from 'react';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
-import { ChevronRight, BookOpen, Terminal, ShieldCheck } from 'lucide-react';
+import { Calendar, MapPin, Users, ArrowRight, Video } from 'lucide-react';
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
-export default function DocsPage() {
-  const sidebarSections = [
-    {
-      title: "Getting Started",
-      icon: <BookOpen size={16} />,
-      items: ["Quick Start Guide", "How the Diagnosis Works", "Understanding Your Score"]
-    },
-    {
-      title: "API Reference (B2B)",
-      icon: <Terminal size={16} />,
-      items: ["Authentication", "POST /free-assessment", "POST /api/download-pdf"]
-    },
-    {
-      title: "Corporate Policies",
-      icon: <ShieldCheck size={16} />,
-      items: ["Privacy Policy", "Terms of Service", "Data Retention"]
-    }
-  ];
+const upcomingEvents = [
+  {
+    id: 1,
+    title: "AI Strategy for Myanmar Retailers",
+    date: "May 15, 2026",
+    time: "2:00 PM - 4:00 PM",
+    type: "Webinar",
+    location: "Online (Zoom)",
+    status: "Open",
+    accent: "#f59e0b" // Gold
+  },
+  {
+    id: 2,
+    title: "SME Digital Transformation Workshop",
+    date: "June 02, 2026",
+    time: "9:00 AM - 5:00 PM",
+    type: "In-Person",
+    location: "Lotte Hotel, Yangon",
+    status: "Limited",
+    accent: "#00F2FF" // Cyan
+  }
+];
 
+export default function EventPage() {
   return (
     <main className="bg-[#050505] min-h-screen text-white">
       <Navbar />
-      
-      <div className="flex pt-20">
-        {/* Sidebar */}
-        <aside className="w-64 fixed h-screen bg-[#0D1117]/80 border-r border-[#00F2FF]/10 p-6 hidden md:block overflow-y-auto">
-          <div className="space-y-8">
-            {sidebarSections.map((section) => (
-              <div key={section.title}>
-                <h4 className="text-[#00F2FF]/50 text-[10px] font-bold uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
-                  {section.icon} {section.title}
-                </h4>
-                <ul className="space-y-3">
-                  {section.items.map((item) => (
-                    <li key={item} className="text-white/50 text-xs hover:text-white cursor-pointer transition-colors">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 px-6 text-center relative">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[#00F2FF]/5 blur-[120px] rounded-full" />
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00F2FF]/30 bg-[#00F2FF]/5 mb-6">
+            <span className="text-[10px] tracking-[0.2em] text-[#00F2FF] uppercase font-bold">Community & Learning</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-playfair italic mb-6">
+            BIOS AI <span className="text-[#f59e0b]">Events</span>
+          </h1>
+          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+            Join our exclusive workshops and webinars to learn how top Myanmar's SMEs are scaling with AI-driven workflows.
+          </p>
+        </div>
+      </section>
+
+      {/* Event Grid */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {upcomingEvents.map((event) => (
+            <div 
+              key={event.id}
+              className="glass-card p-8 border-white/5 group hover:border-[#00F2FF]/30 transition-all duration-500 relative overflow-hidden"
+            >
+              {/* Background Glow */}
+              <div className="absolute -right-20 -top-20 w-40 h-40 blur-[80px] opacity-20 group-hover:opacity-40 transition-opacity" style={{ backgroundColor: event.accent }} />
+
+              <div className="flex flex-col md:flex-row justify-between gap-6 relative z-10">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="px-3 py-1 rounded-md bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      {event.type}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider ${event.status === 'Open' ? 'text-green-400' : 'text-[#f59e0b]'}`}>
+                      ● {event.status} Registration
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold group-hover:text-[#00F2FF] transition-colors">{event.title}</h3>
+                  
+                  <div className="space-y-2 text-white/50 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Calendar size={16} className="text-[#00F2FF]" />
+                      <span>{event.date} | {event.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {event.type === 'Webinar' ? <Video size={16} /> : <MapPin size={16} />}
+                      <span>{event.location}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-end">
+                  <button 
+                    className="px-6 py-3 bg-white/5 border border-white/10 rounded-lg font-bold text-sm hover:bg-[#00F2FF] hover:text-black hover:border-[#00F2FF] transition-all flex items-center gap-2"
+                  >
+                    REGISTER NOW <ArrowRight size={16} />
+                  </button>
+                </div>
               </div>
-            ))}
-          </div>
-        </aside>
-
-        {/* Content Area */}
-        <section className="flex-1 md:ml-64 p-8 md:p-16">
-          <div className="max-w-3xl">
-            <nav className="text-[10px] text-white/30 uppercase tracking-widest mb-8 flex items-center gap-2">
-              Docs <ChevronRight size={10} /> Getting Started <ChevronRight size={10} /> <span className="text-[#00F2FF]">Quick Start Guide</span>
-            </nav>
-
-            <h1 className="text-4xl font-playfair italic mb-6">Quick Start Guide</h1>
-            <p className="text-white/60 leading-relaxed mb-8">
-              Welcome to the BIOS AI Documentation. This guide will help you understand how to leverage our AI Strategy Co-founder to scale your business.
-            </p>
-
-            <div className="p-6 bg-[#00F2FF]/5 border border-[#00F2FF]/10 rounded-sm mb-8">
-              <h3 className="text-[#00F2FF] font-bold text-sm mb-2 uppercase tracking-wider">Note:</h3>
-              <p className="text-sm text-white/70 italic">
-                Our diagnosis tool is free for Myanmar's SMEs. No API key is required for the basic assessment.
-              </p>
             </div>
+          ))}
+        </div>
+      </section>
 
-            <h2 className="text-2xl font-playfair mb-4">Core Concepts</h2>
-            <p className="text-white/60 mb-4">
-              BIOS AI operates on a 5-dimensional strategy framework designed specifically for the Myanmar market environment.
+      {/* Newsletter / Stay Informed */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto glass-card p-12 border-[#f59e0b]/20 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-[#f59e0b]/5 pointer-events-none" />
+            <h2 className="text-3xl font-playfair italic mb-4">Don't miss the next session</h2>
+            <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">
+                Get notified when we launch new AI strategy workshops for your specific industry.
             </p>
-            <ul className="list-disc list-inside space-y-2 text-white/50 text-sm mb-12 ml-4">
-              <li>Revenue Strength & Scalability</li>
-              <li>Customer Retention Dynamics</li>
-              <li>Market Position Index</li>
-              <li>Technology Adoption Curve</li>
-              <li>Growth Trajectory Planning</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input 
+                    type="email" 
+                    placeholder="Enter your work email" 
+                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-[#f59e0b]/50 transition-all"
+                />
+                <button className="px-8 py-3 bg-[#f59e0b] text-black font-bold rounded-lg hover:scale-105 active:scale-95 transition-all">
+                    SUBSCRIBE
+                </button>
+            </form>
+        </div>
+      </section>
 
       <Footer />
     </main>
